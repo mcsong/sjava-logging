@@ -33,11 +33,11 @@ public class LoggingTest {
 		//}
 		
 		// add shutdown hook
-		getRuntime().addShutdownHook(new Thread() {
-			public void run() {
-				BufferedWriterCacheUtility.shutdown();
-			}
-    	});
+		//getRuntime().addShutdownHook(new Thread() {
+		//	public void run() {
+		//		BufferedWriterCacheUtility.shutdown();
+		//	}
+    	//});
 		
 	
 		

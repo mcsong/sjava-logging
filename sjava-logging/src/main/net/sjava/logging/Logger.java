@@ -3,6 +3,8 @@
  */
 package net.sjava.logging;
 
+import static java.lang.Runtime.getRuntime;
+
 import java.io.IOException;
 import java.util.Stack;
 import java.util.concurrent.locks.Lock;
@@ -10,6 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import net.sjava.logging.rollover.AppenderFactory;
 import net.sjava.logging.rollover.IAppender;
+import net.sjava.logging.util.BufferedWriterCacheUtility;
 import net.sjava.logging.util.ConfigUtility;
 
 /**
@@ -34,7 +37,16 @@ public class Logger implements Cloneable {
     /** lock instance */
     private static final Lock lock = new ReentrantLock();
     
-     
+    
+    static {
+		getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				System.out.println("aaaaaaaaaa");
+				BufferedWriterCacheUtility.shutdown();
+			}
+    	});
+    }
+    
 	/** for singleton instance using private constructor */
 	private Logger() {
 
