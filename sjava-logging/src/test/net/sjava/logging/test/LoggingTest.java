@@ -4,10 +4,8 @@ import net.sjava.logging.Logger;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import net.sjava.logging.util.BufferedWriterCacheUtility;
 
-// static import
-import static java.lang.Runtime.getRuntime;
+
 
 public class LoggingTest {
 
