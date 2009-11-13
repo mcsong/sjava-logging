@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sjava-config>
+	<!-- array variable delimeter is "," -->
+	
+	<!-- sjava-config 설정, 아래 설정은 지우지 마세요 -->
+	<sjava-service name="config">
+		<key name="watch" value="false" /> <!-- true, false -->
+		<key name="period" value="60" /> <!-- 초단위, 60 second is 1 minute -->
+	</sjava-service>
+	
+	<!-- 로그서버 설정 -->
+	<sjava-service name="logging">
+		<key name="base-dir" value="d:\sjava-logging" />
+		<key name="service-dir" value="default" />
+		<key name="file-name" value="default" />
+		<key name="file-ext" value="log" />
+		<key name="buffer-size" value="1024" />
+		
+		<!-- day(1), hour(2), minute(3) -->
+		<key name="strategy" value="2" />
+		<!-- lru cache map size -->
+		<key name="cache-size" value="100" />
+		
+		<!-- flush option -->
+		<key name="flush-option" value="false" />
+		<!-- flush period -->
+		<key name="flush-period" value="10000" />
+		
+	</sjava-service>
+</sjava-config>
