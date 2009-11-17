@@ -18,15 +18,15 @@ public class LoggingTest {
 		
 		System.out.println("s - " + format.format(new Date()));
 		
-		for(int i=0; i < 1000; i++) {
+		for(int i=0; i < 1; i++) {
 			Logger.getInstance().log("aaaaaaaaaaaaaaa");
 			Logger.getInstance().log("aaaaaaaaaaaaccccccccccccccccccaaa");
 			Logger.getInstance().log("metoo", "ǪǪǪǪǪ��.. ");
 			Logger.getInstance().log("abcded", "abcde", "aaaa b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		}
 		
-		Thread.sleep(1000 * 60);
-		Thread.sleep(1000 * 60);
+		Thread.sleep(1000 * 3);
+		//Thread.sleep(1000 * 60);
 		
 		System.out.println("e - " + format.format(new Date()));
 	}
