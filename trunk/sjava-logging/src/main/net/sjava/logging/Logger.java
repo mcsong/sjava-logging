@@ -39,7 +39,7 @@ public class Logger implements Cloneable {
     
     
     /**
-     * Shutdown hook add
+     * Shutdown hook start
      */
     static {
 		getRuntime().addShutdownHook(new Thread() {
@@ -50,20 +50,15 @@ public class Logger implements Cloneable {
     }
     
     /**
-     * Flush start
+     * Flush start using Timer
      */
-    static {
-    	System.out.println("----------");
-    	System.out.println(ConfigUtility.isFlushing());
-    	
+    static {    	
     	// flush option is true
     	if(ConfigUtility.isFlushing()) {
 	    	new java.util.Timer("sjava-logging").scheduleAtFixedRate(new java.util.TimerTask() {
 	    		public void run(){
 	    			try {
 	    				BufferedWriterCacheUtility.flushAll();
-	    				//Thread.sleep(2000);
-	    				System.out.println("- scheduleatfixedrate run at " + new java.util.Date());
 	    			} catch(Exception e) {
 	    				e.printStackTrace();
 	    			}
