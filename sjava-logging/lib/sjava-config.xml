@@ -3,8 +3,8 @@
 	<!-- array variable delimeter is "," -->
 	
 	<!-- sjava-config 설정, 아래 설정은 지우지 마세요 -->
-	<sjava-service name="config">
-		<key name="watch" value="false" /> <!-- true, false -->
+	<sjava-service name="sjava-config">
+		<key name="watch" value="true" /> <!-- true, false -->
 		<key name="period" value="60" /> <!-- 초단위, 60 second is 1 minute -->
 	</sjava-service>
 	
