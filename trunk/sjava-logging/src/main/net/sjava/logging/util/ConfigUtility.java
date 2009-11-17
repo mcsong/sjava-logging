@@ -117,7 +117,7 @@ public class ConfigUtility {
 		} catch (NumberFormatException e) {
 			System.out.println("FlushPeriod format Exception");
 			// default flush period
-			return 60000;
+			return 60; // 1Ка
 		}
 	}
 	
@@ -134,4 +134,16 @@ public class ConfigUtility {
 		
 		return true;
 	}
+	
+	/**
+	 * Get exception's call stack
+	 * @param e
+	 * @return
+	 */
+	public static String getExceptionCallStack(Exception e) {
+		java.io.StringWriter sw = new java.io.StringWriter();
+		e.printStackTrace(new java.io.PrintWriter(sw));
+		return sw.toString();
+	}
+	
 }
