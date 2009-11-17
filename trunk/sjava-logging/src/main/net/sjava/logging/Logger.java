@@ -41,7 +41,6 @@ public class Logger implements Cloneable {
     static {
 		getRuntime().addShutdownHook(new Thread() {
 			public void run() {
-				System.out.println("aaaaaaaaaa");
 				BufferedWriterCacheUtility.shutdown();
 			}
     	});
@@ -49,7 +48,6 @@ public class Logger implements Cloneable {
     
 	/** for singleton instance using private constructor */
 	private Logger() {
-
 	}
 	
 	/**
