@@ -5,12 +5,9 @@ import net.sjava.logging.Logger;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-
-
 public class LoggingTest {
 
 	private static SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss SSS");
-	
 
 	public static String getExceptionCallStack(Exception e) {
 	  java.io.StringWriter sw = new java.io.StringWriter();
@@ -18,26 +15,10 @@ public class LoggingTest {
 	  return sw.toString();
 	}
 
-	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-		//try {
-		//	throw new Exception();
-		//} catch(Exception e) {
-		//	System.out.println(getExceptionStackTraceAsString(e));
-		//}
-		
-		// add shutdown hook
-		//getRuntime().addShutdownHook(new Thread() {
-		//	public void run() {
-		//		BufferedWriterCacheUtility.shutdown();
-		//	}
-    	//});
-		
-	
 		
 		System.out.println("s - " + format.format(new Date()));
 		
@@ -49,6 +30,5 @@ public class LoggingTest {
 		}
 	
 		System.out.println("e - " + format.format(new Date()));
-		
 	}
 }
