@@ -9,7 +9,7 @@
 	</sjava-service>
 	
 	<!-- 로그서버 설정 -->
-	<sjava-service name="logging">
+	<sjava-service name="sjava-logging">
 		<key name="base-dir" value="d:\sjava-logging" />
 		<key name="service-dir" value="default" />
 		<key name="file-name" value="default" />
