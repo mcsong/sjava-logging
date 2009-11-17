@@ -103,7 +103,11 @@ public class ConfigUtility {
 	 * @return
 	 */
 	public static boolean isFlushing() {
-		return Boolean.getBoolean(ConfigHandler.getInstance().getValue("sjava-logging", "flush-option", "false"));			
+		String value = ConfigHandler.getInstance().getValue("sjava-logging", "flush-option", "false").toLowerCase();
+		if(value.equals("true"))
+			return true;
+		
+		return false;			
 	}
 	
 	/**
@@ -111,14 +115,18 @@ public class ConfigUtility {
 	 * @return
 	 */
 	public static int getFlushPeriod() {
+		int value = 60; // 1Ка
 		try {
-			// default is 1 minute 
-			return Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "flush-period", "60000"));
+			// default is 1 minute
+			value = Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "flush-period", "60"));
+			//return Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "flush-period", "60000"));
 		} catch (NumberFormatException e) {
-			System.out.println("FlushPeriod format Exception");
+			e.printStackTrace();
 			// default flush period
-			return 60; // 1Ка
+			value = 60; // 1Ка
 		}
+		
+		return value;
 	}
 	
 	
