@@ -22,9 +22,9 @@
 		<key name="cache-size" value="100" />
 		
 		<!-- flush option -->
-		<key name="flush-option" value="false" />
-		<!-- flush period -->
-		<key name="flush-period" value="10000" />
+		<key name="flush-option" value="true" />
+		<!-- flush period,  초단위 -->
+		<key name="flush-period" value="10" />
 		
 	</sjava-service>
 </sjava-config>
