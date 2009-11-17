@@ -38,6 +38,9 @@ public class Logger implements Cloneable {
     private static final Lock lock = new ReentrantLock();
     
     
+    /**
+     * Shutdown hook add
+     */
     static {
 		getRuntime().addShutdownHook(new Thread() {
 			public void run() {
@@ -46,8 +49,34 @@ public class Logger implements Cloneable {
     	});
     }
     
+    /**
+     * Flush start
+     */
+    static {
+    	System.out.println("----------");
+    	System.out.println(ConfigUtility.isFlushing());
+    	
+    	// flush option is true
+    	if(ConfigUtility.isFlushing()) {
+	    	new java.util.Timer("sjava-logging").scheduleAtFixedRate(new java.util.TimerTask() {
+	    		public void run(){
+	    			try {
+	    				BufferedWriterCacheUtility.flushAll();
+	    				//Thread.sleep(2000);
+	    				System.out.println("- scheduleatfixedrate run at " + new java.util.Date());
+	    			} catch(Exception e) {
+	    				e.printStackTrace();
+	    			}
+	    		}
+	    	}, 0, ConfigUtility.getFlushPeriod() * 1000); // 10 √ 
+    	}
+    }
+    	
+    
+    
 	/** for singleton instance using private constructor */
 	private Logger() {
+		
 	}
 	
 	/**
