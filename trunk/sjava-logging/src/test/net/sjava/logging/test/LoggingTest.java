@@ -9,16 +9,12 @@ public class LoggingTest {
 
 	private static SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss SSS");
 
-	public static String getExceptionCallStack(Exception e) {
-	  java.io.StringWriter sw = new java.io.StringWriter();
-	  e.printStackTrace(new java.io.PrintWriter(sw));
-	  return sw.toString();
-	}
+
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		System.out.println("s - " + format.format(new Date()));
 		
@@ -28,7 +24,10 @@ public class LoggingTest {
 			Logger.getInstance().log("metoo", "ǪǪǪǪǪ��.. ");
 			Logger.getInstance().log("abcded", "abcde", "aaaa b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		}
-	
+		
+		Thread.sleep(1000 * 60);
+		Thread.sleep(1000 * 60);
+		
 		System.out.println("e - " + format.format(new Date()));
 	}
 }
