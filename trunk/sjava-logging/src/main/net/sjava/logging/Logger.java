@@ -7,6 +7,7 @@ import static java.lang.Runtime.getRuntime;
 
 import java.io.IOException;
 import java.util.Stack;
+import java.util.Timer;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -37,6 +38,7 @@ public class Logger implements Cloneable {
     /** lock instance */
     private static final Lock lock = new ReentrantLock();
     
+    private static Timer timer = new java.util.Timer("sjava-logging");
     
     /**
      * Shutdown hook start
@@ -45,6 +47,7 @@ public class Logger implements Cloneable {
 		getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				BufferedWriterCacheUtility.shutdown();
+				timer.cancel();
 			}
     	});
     }
@@ -55,7 +58,7 @@ public class Logger implements Cloneable {
     static {    	
     	// flush option is true
     	if(ConfigUtility.isFlushing()) {
-	    	new java.util.Timer("sjava-logging").scheduleAtFixedRate(new java.util.TimerTask() {
+	    	timer.scheduleAtFixedRate(new java.util.TimerTask() {
 	    		public void run(){
 	    			try {
 	    				BufferedWriterCacheUtility.flushAll();
