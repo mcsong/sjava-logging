@@ -44,6 +44,7 @@ public class Logger implements Cloneable {
     /**
      * Shutdown hook start
      */
+    /*
     static {
 		getRuntime().addShutdownHook(new Thread() {
 			public void run() {
@@ -52,7 +53,7 @@ public class Logger implements Cloneable {
 			}
     	});
     }
-    
+    */
     /**
      * Flush start using Timer
      */
