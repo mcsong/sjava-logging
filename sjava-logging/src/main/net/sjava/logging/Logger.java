@@ -11,7 +11,6 @@ import java.util.Timer;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.sjava.config.ConfigHandler;
 import net.sjava.logging.rollover.AppenderFactory;
 import net.sjava.logging.rollover.IAppender;
 import net.sjava.logging.util.BufferedWriterCacheUtility;
