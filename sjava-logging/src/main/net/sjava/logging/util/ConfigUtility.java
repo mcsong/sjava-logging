@@ -99,6 +99,24 @@ public class ConfigUtility {
 	
 	
 	/**
+	 * Get Logger pool size
+	 * 
+	 * @return
+	 */
+	public static int getLoggerPoolSize() {
+		int value = 10; // 1Ка
+		try {
+			// default is 1 minute
+			value = Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "pool-size", "10"));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		
+		return value;
+	}
+	
+	
+	/**
 	 * Is flush option
 	 * @return
 	 */
@@ -128,6 +146,7 @@ public class ConfigUtility {
 		
 		return value;
 	}
+	
 	
 	
 	/**
