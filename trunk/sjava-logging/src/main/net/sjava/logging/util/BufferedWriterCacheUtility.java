@@ -101,7 +101,6 @@ public class BufferedWriterCacheUtility {
 		    iter = cache.values().iterator();
 		    while(iter.hasNext()) {
 		    	iter.next().flush();
-		    	System.out.println("Çã¤Ã¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©");
 		    }
 		    
 		} catch(java.io.IOException e) {
