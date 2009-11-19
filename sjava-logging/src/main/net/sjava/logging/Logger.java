@@ -11,6 +11,7 @@ import java.util.Timer;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import net.sjava.config.ConfigHandler;
 import net.sjava.logging.rollover.AppenderFactory;
 import net.sjava.logging.rollover.IAppender;
 import net.sjava.logging.util.BufferedWriterCacheUtility;
@@ -30,7 +31,7 @@ public class Logger implements Cloneable {
 	private IAppender appender = null;
 
 	/** logger pool size */
-	private static final int maxInstance = 10;
+	private static final int maxInstance = ConfigUtility.getLoggerPoolSize();
 	
 	/** logger pool */
     private static Stack<Logger> stack = new Stack<Logger>();
@@ -38,6 +39,7 @@ public class Logger implements Cloneable {
     /** lock instance */
     private static final Lock lock = new ReentrantLock();
     
+    /** timer instance */
     private static Timer timer = new java.util.Timer("sjava-logging");
     
     /**
