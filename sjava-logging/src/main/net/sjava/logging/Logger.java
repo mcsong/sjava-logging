@@ -39,7 +39,7 @@ public class Logger implements Cloneable {
     private static final Lock lock = new ReentrantLock();
     
     /** timer instance */
-    private static Timer timer = new java.util.Timer("sjava-logging");
+    private static Timer timer; 
     
     /**
      * Shutdown hook start
@@ -59,7 +59,10 @@ public class Logger implements Cloneable {
      */
     static {    	
     	// flush option is true
-    	if(ConfigUtility.isFlushing()) {
+    	System.out.println(ConfigUtility.isFlushing());
+    	
+    	if(ConfigUtility.isFlushing()) {   
+    		timer = new java.util.Timer("sjava-logging");
 	    	timer.scheduleAtFixedRate(new java.util.TimerTask() {
 	    		public void run(){
 	    			try {
