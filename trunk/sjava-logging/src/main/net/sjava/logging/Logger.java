@@ -16,6 +16,9 @@ import net.sjava.logging.rollover.IAppender;
 import net.sjava.logging.util.BufferedWriterCacheUtility;
 import net.sjava.logging.util.ConfigUtility;
 
+
+
+
 /**
  * 
  * @author mcsong@gmail.com
@@ -44,23 +47,23 @@ public class Logger implements Cloneable {
     /**
      * Shutdown hook start
      */
-    /*
+    /**
     static {
 		getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				BufferedWriterCacheUtility.shutdown();
-				timer.cancel();
 			}
     	});
     }
     */
+    
     /**
      * Flush start using Timer
      */
     static {    	
     	// flush option is true
     	if(ConfigUtility.isFlushing()) {   
-    		timer = new java.util.Timer("sjava-logging");
+    		timer = new java.util.Timer("sjava-logging", true);
 	    	timer.scheduleAtFixedRate(new java.util.TimerTask() {
 	    		public void run(){
 	    			try {
@@ -72,10 +75,8 @@ public class Logger implements Cloneable {
 	    	}, 0, ConfigUtility.getFlushPeriod() * 1000); // 10 √ 
     	}
     }
-    	
     
-    
-    public void cancelTimer() {
+    public static void cancelTimer() {
     	if(timer != null)
     		timer.cancel();
     }
