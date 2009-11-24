@@ -3,7 +3,7 @@
  */
 package net.sjava.logging;
 
-//import static java.lang.Runtime.getRuntime;
+import static java.lang.Runtime.getRuntime;
 
 import java.io.IOException;
 import java.util.Stack;
@@ -47,15 +47,19 @@ public class Logger implements Cloneable {
     /**
      * Shutdown hook start
      */
-    /**
+    /*
     static {
 		getRuntime().addShutdownHook(new Thread() {
 			public void run() {
+				try {
 				BufferedWriterCacheUtility.shutdown();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
-    	});
-    }
-    */
+		});
+	}
+	*/
     
     /**
      * Flush start using Timer
