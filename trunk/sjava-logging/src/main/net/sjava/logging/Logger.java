@@ -3,7 +3,7 @@
  */
 package net.sjava.logging;
 
-import static java.lang.Runtime.getRuntime;
+//import static java.lang.Runtime.getRuntime;
 
 import java.io.IOException;
 import java.util.Stack;
