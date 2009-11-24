@@ -59,8 +59,6 @@ public class Logger implements Cloneable {
      */
     static {    	
     	// flush option is true
-    	System.out.println(ConfigUtility.isFlushing());
-    	
     	if(ConfigUtility.isFlushing()) {   
     		timer = new java.util.Timer("sjava-logging");
 	    	timer.scheduleAtFixedRate(new java.util.TimerTask() {
@@ -76,6 +74,11 @@ public class Logger implements Cloneable {
     }
     	
     
+    
+    public void cancelTimer() {
+    	if(timer != null)
+    		timer.cancel();
+    }
     
 	/** for singleton instance using private constructor */
 	private Logger() {
