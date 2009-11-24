@@ -4,7 +4,7 @@
 	
 	<!-- sjava-config setting, do not delete -->
 	<sjava-service name="sjava-config">
-		<key name="watch" value="true" /> <!-- true, false -->
+		<key name="watch" value="false" /> <!-- true, false -->
 		<key name="period" value="60" /> <!-- per second, 60 second is 1 minute -->
 	</sjava-service>
 	
