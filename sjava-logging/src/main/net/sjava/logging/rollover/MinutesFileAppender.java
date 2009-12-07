@@ -3,8 +3,6 @@ package net.sjava.logging.rollover;
 import java.io.File;
 import java.io.BufferedWriter;
 import java.io.IOException;
-
-import java.util.Stack;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -19,55 +17,19 @@ import net.sjava.logging.util.SimpleDateFormatFactory;
  * @since 2009. 7. 8.
  */
 public class MinutesFileAppender extends AbstractFileAppender {
-	/** pool size */
-	private static final int size = 10;
-	
-	/** pool */
-    private static Stack<MinutesFileAppender> stack = new Stack<MinutesFileAppender>();
 	
     /** lock instance */
     private static final Lock lock = new ReentrantLock();
     
-	/** for singleton instance using private constructor */
-	private MinutesFileAppender() {
-		
-	}
 	
 	/**
 	 * 
 	 * @return
 	 */
 	public static MinutesFileAppender getInstance() {
-		lock.lock();
-		try {
-			if(stack.empty())
-				return new MinutesFileAppender();
-			
-			return stack.pop();
-		} finally {
-			lock.unlock();
-		}
+		return new MinutesFileAppender();
 	}	
 	
-	/**
-	 * free HourlyFileAppender instance
-	 */
-	private static void free(MinutesFileAppender appender) {
-		lock.lock();
-		try {
-			if(stack.size() < size)
-				stack.push(appender);			
-		} finally {
-			lock.unlock();
-		}
-	}
-	
-	/**
-	 * close this instance
-	 */
-	public void close() {
-		free(this);
-	}
 
 	@Override
 	void setDirectory(String dir, String serviceName) {
@@ -114,7 +76,7 @@ public class MinutesFileAppender extends AbstractFileAppender {
 	public void write(String serviceName, String fileName, Level level, String data) {
 		
 		BufferedWriter bwriter = null;
-		
+		lock.lock();
 		try {			
 			bwriter = BufferedWriterCacheUtility.createBufferedWriter(super.logfileName);
 			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
@@ -126,6 +88,8 @@ public class MinutesFileAppender extends AbstractFileAppender {
 		} catch(IOException e) {
 			// ignore because not critical
 			e.printStackTrace();
-		} 
+		} finally {
+			lock.unlock();
+		}
 	}		
 }

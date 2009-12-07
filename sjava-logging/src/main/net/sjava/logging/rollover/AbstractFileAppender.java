@@ -1,14 +1,12 @@
 package net.sjava.logging.rollover;
 
 import java.util.Date;
-
 import net.sjava.logging.Level;
 import net.sjava.logging.util.ConfigUtility;
 import net.sjava.logging.util.SimpleDateFormatFactory;
 
 /**
- * 
- * 
+ *  * 
  * 
  * @author mcsong@gmail.com
  * @version 1.0.0
@@ -31,6 +29,7 @@ public abstract class AbstractFileAppender implements IAppender {
 	
 	/** full log filename */
 	protected String logfileName;
+	
 	
 	/**
 	 * set keys 

@@ -12,7 +12,7 @@ public class AppenderFactory {
 	 * @return
 	 */
 	public static IAppender createDailyFileAppender() {
-		return DailyFileAppender.getInstance();
+		return DailyFileAppender.create();
 	}
 	
 	/**
@@ -20,7 +20,7 @@ public class AppenderFactory {
 	 * @return
 	 */
 	public static IAppender createHourlyFileAppender() {
-		return HourlyFileAppender.getInstance();
+		return HourlyFileAppender.create();
 	}
 	
 	
@@ -40,22 +40,4 @@ public class AppenderFactory {
 		return ConsoleAppender.getInstance();
 	}
 	
-	/**
-	 * 
-	 * @param appender
-	 */
-	public static void free(IAppender appender) {
-		
-		if(appender instanceof DailyFileAppender)
-			((DailyFileAppender) appender).close();
-					
-		if(appender instanceof HourlyFileAppender)
-			((HourlyFileAppender) appender).close();
-				
-		if(appender instanceof MinutesFileAppender)
-			((MinutesFileAppender) appender).close();
-		
-		if(appender instanceof ConsoleAppender)
-			((ConsoleAppender) appender).close();	
-	}
 }

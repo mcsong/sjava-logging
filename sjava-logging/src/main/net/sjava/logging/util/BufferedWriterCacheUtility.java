@@ -82,6 +82,7 @@ public class BufferedWriterCacheUtility {
 	 */
 	public static void shutdown() {
 		Iterator<BufferedWriter> iter = null;
+		lock.lock();
 		try {
 		    iter = cache.values().iterator();
 		    while(iter.hasNext())
@@ -89,6 +90,8 @@ public class BufferedWriterCacheUtility {
 		    
 		} catch(java.io.IOException e) {
 			e.printStackTrace();
+		} finally {
+			lock.unlock();
 		}
 	}
 	
@@ -97,6 +100,7 @@ public class BufferedWriterCacheUtility {
 	 */
 	public static void flushAll() {
 		Iterator<BufferedWriter> iter = null;
+		lock.lock();
 		try {
 		    iter = cache.values().iterator();
 		    while(iter.hasNext()) {
@@ -105,6 +109,8 @@ public class BufferedWriterCacheUtility {
 		    
 		} catch(java.io.IOException e) {
 			e.printStackTrace();
+		} finally {
+			lock.unlock();
 		}
 	}
 	
