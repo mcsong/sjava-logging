@@ -3,13 +3,10 @@
  */
 package net.sjava.logging;
 
-//import static java.lang.Runtime.getRuntime;
+import static java.lang.Runtime.getRuntime;
 
 import java.io.IOException;
-import java.util.Stack;
 import java.util.Timer;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import net.sjava.logging.rollover.AppenderFactory;
 import net.sjava.logging.rollover.IAppender;
@@ -31,35 +28,24 @@ public class Logger implements Cloneable {
 	
 	/** appender type	 */
 	private IAppender appender = null;
-
-	/** logger pool size */
-	private static final int maxInstance = ConfigUtility.getLoggerPoolSize();
-	
-	/** logger pool */
-    private static Stack<Logger> stack = new Stack<Logger>();
-	
-    /** lock instance */
-    private static final Lock lock = new ReentrantLock();
     
-    /** timer instance */
-    private static Timer timer; 
     
     /**
      * Shutdown hook start
      */
-    /*
+    
     static {
 		getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				try {
-				BufferedWriterCacheUtility.shutdown();
+					BufferedWriterCacheUtility.shutdown();
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-	*/
+	
     
     /**
      * Flush start using Timer
@@ -67,7 +53,7 @@ public class Logger implements Cloneable {
     static {    	
     	// flush option is true
     	if(ConfigUtility.isFlushing()) {   
-    		timer = new java.util.Timer("sjava-logging", true);
+    		Timer timer = new java.util.Timer("sjava-logging", true);
 	    	timer.scheduleAtFixedRate(new java.util.TimerTask() {
 	    		public void run(){
 	    			try {
@@ -79,54 +65,15 @@ public class Logger implements Cloneable {
 	    	}, 0, ConfigUtility.getFlushPeriod() * 1000); // 10 √ 
     	}
     }
-    
-    public static void cancelTimer() {
-    	if(timer != null)
-    		timer.cancel();
-    }
-    
-	/** for singleton instance using private constructor */
-	private Logger() {
-		
-	}
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public static Logger getInstance() {
-		lock.lock();
-		try
-		{
-			if(stack.empty())
-				return new Logger();
+	public static Logger create() {
+		return new Logger();
+	}
 			
-			return stack.pop();
-		} finally {
-			lock.unlock();
-		}
-	}
-		
-	/**
-	 * free logger instance
-	 */
-	private static void free(Logger logger) {
-		lock.lock();
-		try {
-			if(stack.size() < maxInstance)
-				stack.push(logger);			
-		} finally {
-			lock.unlock();
-		}
-	}
-	
-	/**
-	 * close this instance
-	 */
-	//public void close() {
-	//	free(this);
-	//}
-	
 	/**
 	 * Set level
 	 * 
@@ -136,15 +83,7 @@ public class Logger implements Cloneable {
 		this.level = LevelFactory.getInstance().getLevel(value);
 	}
 	
-	/**
-	 * Set level
-	 * 
-	 * @param level
-	 */
-	public void setLevel(Level level) {
-		this.level = level;
-	}
-	
+		
 	/**
 	 * Get appender
 	 * @return the appender
@@ -160,16 +99,7 @@ public class Logger implements Cloneable {
 	 * @return the appender
 	 */
 	public IAppender getAppender(int type) {
-		if(type == 1) {
-			return AppenderFactory.createDailyFileAppender();
-		} else if(type == 2) {
-			return AppenderFactory.createHourlyFileAppender();
-		} else if(type == 3) {
-			return AppenderFactory.createMinutesFileAppender();
-		}
-		
-		return AppenderFactory.createDailyFileAppender();
-		//return appender;
+		return this.createAppender(type);
 	}
 
 	/**
@@ -185,15 +115,24 @@ public class Logger implements Cloneable {
 	 * @param type
 	 */
 	public void setAppender(int type) {
+		this.appender = this.createAppender(type);	
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @return
+	 */
+	private IAppender createAppender(int type) {
 		if(type == 1) {
-			this.appender = AppenderFactory.createDailyFileAppender();
+			return AppenderFactory.createDailyFileAppender();
 		} else if(type == 2) {
-			this.appender = AppenderFactory.createHourlyFileAppender();
+			return AppenderFactory.createHourlyFileAppender();
 		} else if(type == 3) {
-			this.appender = AppenderFactory.createMinutesFileAppender();
-		} else {
-			this.appender = AppenderFactory.createDailyFileAppender();
+			return AppenderFactory.createMinutesFileAppender();
 		}
+		
+		return AppenderFactory.createDailyFileAppender();
 	}
 	
 	
@@ -224,8 +163,6 @@ public class Logger implements Cloneable {
 	 */
 	public void log(String service, String fileName, String data) {
 		this.write(service, fileName, data);
-		AppenderFactory.free(appender);
-		Logger.free(this);
 	}
 	
 	/**
@@ -250,7 +187,7 @@ public class Logger implements Cloneable {
 			this.setAppender(ConfigUtility.getRollingStrategy());
 		
 		if(this.level == null)
-			this.setLevel(LevelFactory.getInstance().getLevel("all"));
+			this.level = LevelFactory.getInstance().getLevel("all");
 		
 		this.appender.log(sname, fname, level, data);
 	}
