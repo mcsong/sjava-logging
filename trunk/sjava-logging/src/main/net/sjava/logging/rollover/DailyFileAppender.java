@@ -4,7 +4,6 @@ package net.sjava.logging.rollover;
 import java.io.File;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.Stack;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -19,57 +18,17 @@ import net.sjava.logging.util.SimpleDateFormatFactory;
  * @since 2009. 7. 6.
  */
 public class DailyFileAppender extends AbstractFileAppender {
-	
-	/** logger pool size */
-	private static final int size = 10;
-	
-	/** logger pool */
-    private static Stack<DailyFileAppender> stack = new Stack<DailyFileAppender>();
-	
     /** lock instance */
     private static final Lock lock = new ReentrantLock();
-    
-	/** for singleton instance using private constructor */
-	private DailyFileAppender() {
-	}
-	
+		
 	/**
 	 * 
 	 * @return
 	 */
-	public static DailyFileAppender getInstance() {
-		lock.lock();
-		try
-		{
-			if(stack.empty())
-				return new DailyFileAppender();
-			
-			return stack.pop();
-		} finally {
-			lock.unlock();
-		}
+	public static DailyFileAppender create() {
+		return new DailyFileAppender();
 	}
 		
-	/**
-	 * free logger instance
-	 */
-	private static void free(DailyFileAppender appender) {
-		lock.lock();
-		try {
-			if(stack.size() < size)
-				stack.push(appender);			
-		} finally {
-			lock.unlock();
-		}
-	}
-	
-	/**
-	 * close this instance
-	 */
-	public void close() {
-		free(this);
-	}
-	
 	@Override
 	void setDirectory(String dir, String serviceName) {
 		StringBuilder builder = new StringBuilder(256);
@@ -107,7 +66,7 @@ public class DailyFileAppender extends AbstractFileAppender {
 	public void write(String serviceName, String fileName, Level level, String data) {
 		
 		BufferedWriter bwriter = null;
-		
+		lock.lock();
 		try {			
 			bwriter = BufferedWriterCacheUtility.createBufferedWriter(super.logfileName);
 			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
@@ -119,7 +78,9 @@ public class DailyFileAppender extends AbstractFileAppender {
 		} catch(IOException e) {
 			// ignore because not critical
 			e.printStackTrace();
-		} 
+		} finally {
+			lock.unlock();
+		}
 	}	
 	
 }

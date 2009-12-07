@@ -4,7 +4,6 @@ package net.sjava.logging.rollover;
 import java.io.File;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.Stack;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -14,58 +13,17 @@ import net.sjava.logging.util.BufferedWriterCacheUtility;
 import net.sjava.logging.util.SimpleDateFormatFactory;
 
 public class HourlyFileAppender extends AbstractFileAppender {
-
-	/** pool size */
-	private static final int size = 10;
-	
-	/** pool */
-    private static Stack<HourlyFileAppender> stack = new Stack<HourlyFileAppender>();
-	
     /** lock instance */
-    private static final Lock lock = new ReentrantLock();
+	private static final Lock lock = new ReentrantLock();
     
-	/** for singleton instance using private constructor */
-	private HourlyFileAppender() {
-		
-	}
-	
 	/**
 	 * 
 	 * @return
 	 */
-	public static HourlyFileAppender getInstance() {
-		lock.lock();
-		try
-		{
-			if(stack.empty())
-				return new HourlyFileAppender();
-			
-			return stack.pop();
-		} finally {
-			lock.unlock();
-		}
+	public static HourlyFileAppender create(){
+		return new HourlyFileAppender();
 	}	
 	
-	/**
-	 * free HourlyFileAppender instance
-	 */
-	private static void free(HourlyFileAppender appender) {
-		lock.lock();
-		try {
-			if(stack.size() < size)
-				stack.push(appender);			
-		} finally {
-			lock.unlock();
-		}
-	}
-	
-	/**
-	 * close this instance
-	 */
-	public void close() {
-		free(this);
-	}
-
 	@Override
 	void setDirectory(String dir, String serviceName) {
 		StringBuilder builder = new StringBuilder(256);
@@ -107,8 +65,11 @@ public class HourlyFileAppender extends AbstractFileAppender {
 	@Override
 	public void write(String serviceName, String fileName, Level level, String data) {		
 		BufferedWriter bwriter = null;
+				
+		lock.lock();
 		
 		try {			
+						
 			bwriter = BufferedWriterCacheUtility.createBufferedWriter(super.logfileName);
 			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
 			bwriter.write(" " + level.name.toLowerCase());
@@ -119,6 +80,9 @@ public class HourlyFileAppender extends AbstractFileAppender {
 		} catch(IOException e) {
 			// ignore because not critical
 			e.printStackTrace();
-		} 
+			
+		} finally {
+			lock.unlock();
+		}
 	}	
 }
