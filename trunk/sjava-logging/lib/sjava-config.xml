@@ -19,10 +19,8 @@
 		<!-- day(1), hour(2), minute(3) -->
 		<key name="strategy" value="2" />
 		
-		<!-- Logger instance pool size -->
-		<key name="pool-size" value="10" />
 		<!-- lru cache map size -->
-		<key name="cache-size" value="100" />
+		<key name="cache-size" value="200" />
 		
 		<!-- flush option -->
 		<key name="flush-option" value="true" />
