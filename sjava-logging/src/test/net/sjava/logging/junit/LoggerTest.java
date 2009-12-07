@@ -9,7 +9,7 @@ public class LoggerTest extends TestCase {
 	private Logger logger = null;
 	
 	public void setUp(){
-		this.logger = Logger.getInstance();
+		this.logger = Logger.create();
 	}
 	
 	public void testGetInstacne() {
