@@ -22,9 +22,9 @@
 		<!-- lru cache map size -->
 		<key name="cache-size" value="200" />
 		
-		<!-- flush option -->
-		<key name="flush-option" value="true" />
-		<!-- flush period, per second -->
+		<!-- flush option, deprecated -->
+		<key name="flush-option" value="false" />
+		<!-- flush period, per second, deprecate -->
 		<key name="flush-period" value="10" />
 		
 	</sjava-service>
