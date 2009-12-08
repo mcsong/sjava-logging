@@ -3,16 +3,13 @@
  */
 package net.sjava.logging;
 
-import static java.lang.Runtime.getRuntime;
+
 
 import java.io.IOException;
-import java.util.Timer;
-
 import net.sjava.logging.rollover.AppenderFactory;
 import net.sjava.logging.rollover.IAppender;
-import net.sjava.logging.util.BufferedWriterCacheUtility;
-import net.sjava.logging.util.ConfigUtility;
 
+import net.sjava.logging.util.ConfigUtility;
 
 
 
@@ -33,7 +30,7 @@ public class Logger implements Cloneable {
     /**
      * Shutdown hook start
      */
-    
+    /*
     static {
 		getRuntime().addShutdownHook(new Thread() {
 			public void run() {
@@ -45,11 +42,12 @@ public class Logger implements Cloneable {
 			}
 		});
 	}
-	
+	*/
     
     /**
      * Flush start using Timer
      */
+    /*
     static {    	
     	// flush option is true
     	if(ConfigUtility.isFlushing()) {   
@@ -65,7 +63,8 @@ public class Logger implements Cloneable {
 	    	}, 0, ConfigUtility.getFlushPeriod() * 1000); // 10 √ 
     	}
     }
-	
+	*/
+    
 	/**
 	 * 
 	 * @return
@@ -184,7 +183,7 @@ public class Logger implements Cloneable {
 		
 		//strategy
 		if(this.appender == null)
-			this.setAppender(ConfigUtility.getRollingStrategy());
+			this.setAppender(ConfigUtility.createStrategy());
 		
 		if(this.level == null)
 			this.level = LevelFactory.getInstance().getLevel("all");

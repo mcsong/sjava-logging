@@ -3,18 +3,17 @@ package net.sjava.logging.rollover;
 
 import java.io.File;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.sjava.logging.Level;
 import net.sjava.logging.util.ConfigUtility;
-import net.sjava.logging.util.BufferedWriterCacheUtility;
+import net.sjava.logging.util.BufferedWriterFactory;
 import net.sjava.logging.util.SimpleDateFormatFactory;
 
 public class HourlyFileAppender extends AbstractFileAppender {
     /** lock instance */
-	private static final Lock lock = new ReentrantLock();
+	private final Lock lock = new ReentrantLock();
     
 	/**
 	 * 
@@ -25,10 +24,10 @@ public class HourlyFileAppender extends AbstractFileAppender {
 	}	
 	
 	@Override
-	void setDirectory(String dir, String serviceName) {
+	void setDirectory(String directory, String serviceName) {
 		StringBuilder builder = new StringBuilder(256);
 		
-		builder.append(ConfigUtility.createBaseDir(dir));		
+		builder.append(ConfigUtility.createBaseDirectory(directory));		
 		builder.append(System.getProperty("file.separator"));
 		builder.append(ConfigUtility.createServiceDir(serviceName));
 		builder.append(System.getProperty("file.separator") + super.year);
@@ -56,28 +55,26 @@ public class HourlyFileAppender extends AbstractFileAppender {
 		builder.append(super.hour);
 		builder.append("-" + ConfigUtility.createFileName(fileName));
 		builder.append( "-" + level.name);
-		builder.append("." + ConfigUtility.getFileExtensionName());
+		builder.append("." + ConfigUtility.createFileExtensionName());
 		
 		super.logfileName = builder.toString();
 	}	
 	
 	
 	@Override
-	public void write(String serviceName, String fileName, Level level, String data) {		
-		BufferedWriter bwriter = null;
-				
+	public void write(String serviceName, String fileName, Level level, String data) {
 		lock.lock();
-		
-		try {			
-						
-			bwriter = BufferedWriterCacheUtility.createBufferedWriter(super.logfileName);
-			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
-			bwriter.write(" " + level.name.toLowerCase());
-			bwriter.write(" " + data);
-			bwriter.newLine();
+		try {
+			BufferedWriter bwriter = BufferedWriterFactory.create(super.logfileName);
 			
-			BufferedWriterCacheUtility.close(super.logfileName, bwriter);
-		} catch(IOException e) {
+			//BufferedWriter bwriter = BufferedWriterCacheUtility.createWriter(super.logfileName);
+			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
+			bwriter.write(" [" + level.name.toLowerCase() +"] ");
+			bwriter.write(data);
+			bwriter.newLine();
+
+			BufferedWriterFactory.close(super.logfileName, bwriter);
+		} catch(Exception e) {
 			// ignore because not critical
 			e.printStackTrace();
 			

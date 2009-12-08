@@ -13,7 +13,7 @@ public class LRUCache<K, V> extends LinkedHashMap<K, V> {
 	/**
 	 * 
 	 */
-	protected int maxsize;
+	private int maxsize;
  
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class LRUCache<K, V> extends LinkedHashMap<K, V> {
     /**
      * 
      */
-    protected boolean removeEldestEntry(Map.Entry eldest) {
+    protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
     	return size() > maxsize;
     }
 }
