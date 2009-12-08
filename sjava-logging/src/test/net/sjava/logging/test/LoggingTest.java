@@ -19,17 +19,18 @@ public class LoggingTest {
 	}
 	
 	public static void testMulti() {
-		for(int i=0; i < 1000; i++) {
+		for(int i=0; i < 4000; i++) {
 			new LoggingThread().start();
+			
 		}
 	}
 	
 	public static void testSingle() {
-		for(int i=0; i < 1000000; i++) {
+		for(int i=0; i < 500; i++) {
 			Logger.create().log("aaaaaaaaaaaaaaa");
 			Logger.create().log("aaaaaaaaaaaaccccccccccccccccccaaa");
 			Logger.create().log("metoo", "ǪǪǪǪǪ��.. ");
-			Logger.create().log("abcded", "abcde", "aaaa b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			Logger.create().log("abcded", "abcde" + i, "aaaa b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		}
 	}
 	
@@ -41,10 +42,9 @@ public class LoggingTest {
 		
 		System.out.println("s - " + format.format(new Date()));
 		
-		//testSingle();
-		testMulti();
-		//Thread.sleep(1000 * 3);
-		//Thread.sleep(1000 * 60);
+		testSingle();
+		//testMulti();
+
 		
 		System.out.println("e - " + format.format(new Date()));
 	}
