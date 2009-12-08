@@ -6,8 +6,8 @@ import net.sjava.config.ConfigHandler;
 
 public class ConfigUtility {
 	/*
-	<key name="baseDir" value="c:\sjava-log-dir" />
-	<key name="serviceDir" value="default" />
+	<key name="base-dir" value="c:\sjava-log-dir" />
+	<key name="service-dir" value="default" />
 	<key name="fileName" value="default" />
 	<key name="fileExt" value="log" />
 	<key name="bufferSize" value="1024" />
@@ -15,26 +15,25 @@ public class ConfigUtility {
 	<key name="strategy" value="2" />
 	*/
 	
-	
-	
+		
 	/**
 	 * Create or get base directory
 	 */
-	public static String createBaseDir(String dir) {		
-		if(dir == null) {
-			String defaultValue = "d:\\sjava-logging";
-			String osName = System.getProperty("os.name").toLowerCase();
-			
-			if(osName.indexOf("linux") > -1) { // linux
-				defaultValue = "//usr/sjava-logging";
-			} else if (osName.indexOf("mac") > -1) { // max
-				defaultValue = "//usr/sjava-logging";
-			} 
-	
-			return ConfigHandler.getInstance().getValue("sjava-logging", "baseDir", defaultValue);
-		}
+	public static String createBaseDirectory(String directory) {
+		if(ConfigUtility.isUseableString(directory))
+			return directory;
 		
-		return dir;
+		String value = "";
+		String osName = System.getProperty("os.name").toLowerCase();
+			
+		if(osName.indexOf("linux") > -1)  // linux
+			value = "//usr/sjava-logging";
+		else if (osName.indexOf("mac") > -1)  // max
+			value = "//usr/sjava-logging";
+		else
+			value = "d:\\sjava-logging";
+	
+		return ConfigHandler.getInstance().getValue("sjava-logging", "base-dir", value);
 	}
 	
 	/**
@@ -46,7 +45,7 @@ public class ConfigUtility {
 		if(ConfigUtility.isUseableString(service))
 			return service;
 		
-		return ConfigHandler.getInstance().getValue("sjava-logging", "serviceDir", "default");
+		return ConfigHandler.getInstance().getValue("sjava-logging", "service-dir", "default");
 	}
 
 	/**
@@ -58,56 +57,39 @@ public class ConfigUtility {
 		if(ConfigUtility.isUseableString(fileName))
 			return fileName;
 
-		return ConfigHandler.getInstance().getValue("sjava-logging", "fileName", "default");
+		return ConfigHandler.getInstance().getValue("sjava-logging", "file-name", "default");
 	}
 	
 	/**
 	 * Get file extension name
 	 * @return file extension name
 	 */
-	public static String getFileExtensionName() {
-		return ConfigHandler.getInstance().getValue("sjava-logging", "fileExt", "log");
+	public static String createFileExtensionName() {
+		return ConfigHandler.getInstance().getValue("sjava-logging", "file-ext", "log");
 	}
 	
 	/**
-	 * Get buffer size
+	 * Create buffer size
 	 * @return buffer size
 	 */
-	public static int getBufferSize() {
+	public static int createBufferSize() {
+		int value = 1024;
 		try {
-			return Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "bufferSize", "1024"));
+			value = Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "buffer-size", "1024"));
 		} catch (NumberFormatException e) {
-			System.out.println("BufferSize format Exception");
-			// default buffer size
-			return 1024;
+			e.printStackTrace();
 		}
+		return value;
 	}
 	
 	/**
 	 * Get rolling strategy
 	 * @return
 	 */
-	public static int getRollingStrategy() {
+	public static int createStrategy() {
+		int value = 2;
 		try {
-			return Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "strategy", "2"));
-		} catch (NumberFormatException e) {
-			System.out.println("RollingStrategy format Exception");
-			// default strategy 
-			return 2;
-		}
-	}
-	
-	
-	/**
-	 * Get Logger pool size
-	 * 
-	 * @return
-	 */
-	public static int getLoggerPoolSize() {
-		int value = 10; // 1Ка
-		try {
-			// default is 1 minute
-			value = Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "pool-size", "10"));
+			value = Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "strategy", "2"));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
@@ -115,11 +97,27 @@ public class ConfigUtility {
 		return value;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public static int createCacheCount() {
+		int value = 300; // default 200
+		try {
+			// default is 1 minute
+			value = Integer.parseInt(ConfigHandler.getInstance().getValue("sjava-logging", "cache-size", "300"));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		
+		return value;
+	}
 	
 	/**
 	 * Is flush option
 	 * @return
 	 */
+	/*
 	public static boolean isFlushing() {
 		String value = ConfigHandler.getInstance().getValue("sjava-logging", "flush-option", "false").toLowerCase();
 		if(value.equals("true"))
@@ -127,11 +125,13 @@ public class ConfigUtility {
 		
 		return false;			
 	}
+	*/
 	
 	/**
 	 * Get flush period
 	 * @return
 	 */
+	/*
 	public static int getFlushPeriod() {
 		int value = 60; // 1Ка
 		try {
@@ -146,6 +146,7 @@ public class ConfigUtility {
 		
 		return value;
 	}
+	*/
 	
 	
 	
