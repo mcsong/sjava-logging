@@ -27,11 +27,14 @@ public class BufferedWriterCacheUtility {
 		private static final long serialVersionUID = 1L;
 		protected boolean removeEldestEntry(Map.Entry<String, BufferedWriter> eldest) {
 			if(size() > size) {
+				lock.lock();
 				try {
 					// flush before deleted
 					eldest.getValue().close();
 				} catch(java.io.IOException e) {
 					// ignore
+				} finally {
+					lock.unlock();
 				}
 			}
 			
