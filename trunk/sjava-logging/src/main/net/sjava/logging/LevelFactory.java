@@ -10,6 +10,7 @@ import java.util.Map;
  * 
  * @author mcsong@gmail.com
  * @since 2009. 7. 1.
+ * @version 
  */
 public class LevelFactory {	
 	/** map of levels	 */
