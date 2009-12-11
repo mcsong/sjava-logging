@@ -55,7 +55,7 @@ public class DailyFileAppender extends AbstractFileAppender {
 		builder.append(System.getProperty("file.separator"));
 		builder.append(year + "." + month +"." + day);		
 		builder.append("-" + ConfigUtility.createFileName(fileName));
-		builder.append( "-" + level.name);
+		builder.append( "-" + level.getName());
 		builder.append("." + ConfigUtility.createFileExtensionName());
 		
 		super.logfileName = builder.toString();
@@ -68,7 +68,7 @@ public class DailyFileAppender extends AbstractFileAppender {
 		try {			
 			BufferedWriter bwriter = BufferedWriterFactory.create(super.logfileName);
 			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
-			bwriter.write(" [" + level.name.toLowerCase() +"] ");
+			bwriter.write(" [" + level.getName().toLowerCase() +"] ");
 			bwriter.write(data);
 			bwriter.newLine();
 			

@@ -7,15 +7,16 @@ package net.sjava.logging;
  * 
  * @author mcsong@gmail.com
  * @since 2009. 6. 19.
+ * @version
  */
 
 public class Level {
 
 	/** level number */
-	public int level;
+	private int level;
 	
 	/** level name */
-	public String name;
+	private String name;
 
 	/**
 	 * Constructor

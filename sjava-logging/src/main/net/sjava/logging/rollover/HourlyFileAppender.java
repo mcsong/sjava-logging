@@ -54,7 +54,7 @@ public class HourlyFileAppender extends AbstractFileAppender {
 		builder.append(super.day + ".");	
 		builder.append(super.hour);
 		builder.append("-" + ConfigUtility.createFileName(fileName));
-		builder.append( "-" + level.name);
+		builder.append( "-" + level.getName());
 		builder.append("." + ConfigUtility.createFileExtensionName());
 		
 		super.logfileName = builder.toString();
@@ -69,7 +69,7 @@ public class HourlyFileAppender extends AbstractFileAppender {
 			
 			//BufferedWriter bwriter = BufferedWriterCacheUtility.createWriter(super.logfileName);
 			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
-			bwriter.write(" [" + level.name.toLowerCase() +"] ");
+			bwriter.write(" [" + level.getName().toLowerCase() +"] ");
 			bwriter.write(data);
 			bwriter.newLine();
 

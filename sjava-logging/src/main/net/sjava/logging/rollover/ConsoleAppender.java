@@ -64,7 +64,7 @@ public class ConsoleAppender implements IAppender {
 	public void log(String serviceName, Level level, String data) {		
 		System.out.print(serviceName);
 		System.out.print("-"+SimpleDateFormatFactory.createLogFormat().format(new java.util.Date()));
-		System.out.print("-"+level.name.toLowerCase());
+		System.out.print("-"+level.getName().toLowerCase());
 		System.out.println("-" + data);
 	}
 

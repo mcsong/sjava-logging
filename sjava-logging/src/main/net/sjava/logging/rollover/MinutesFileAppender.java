@@ -31,7 +31,7 @@ public class MinutesFileAppender extends AbstractFileAppender {
 
 	@Override
 	void setDirectory(String directory, String serviceName) {
-		StringBuilder builder = new StringBuilder(256);
+		final StringBuilder builder = new StringBuilder(256);
 		
 		builder.append(ConfigUtility.createBaseDirectory(directory));
 		builder.append(System.getProperty("file.separator"));
@@ -42,7 +42,7 @@ public class MinutesFileAppender extends AbstractFileAppender {
 		builder.append(System.getProperty("file.separator") + super.hour);
 		
 		super.logfileName = builder.toString();
-		File file = new File(builder.toString());
+		final File file = new File(builder.toString());
 		if(file.exists())
 			return;
 		
@@ -53,7 +53,7 @@ public class MinutesFileAppender extends AbstractFileAppender {
 	void setFile(Level level, String fileName) {
 		// TODO Auto-generated method stub
 		
-		StringBuilder builder = new StringBuilder(256);
+		final StringBuilder builder = new StringBuilder(256);
 		builder.append(super.logfileName);
 		builder.append(System.getProperty("file.separator"));
 		builder.append(super.year + ".");
@@ -63,7 +63,7 @@ public class MinutesFileAppender extends AbstractFileAppender {
 		builder.append(super.minute);
 		
 		builder.append("-" + ConfigUtility.createFileName(fileName));
-		builder.append( "-" + level.name);
+		builder.append( "-" + level.getName());
 		builder.append("." + ConfigUtility.createFileExtensionName());
 		
 		super.logfileName = builder.toString();
@@ -78,11 +78,11 @@ public class MinutesFileAppender extends AbstractFileAppender {
 		try {			
 			bwriter = BufferedWriterFactory.create(super.logfileName);
 			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
-			bwriter.write(" [" + level.name.toLowerCase() +"] ");
+			bwriter.write(" [" + level.getName().toLowerCase() +"] ");
 			bwriter.newLine();
 			
 			BufferedWriterFactory.close(super.logfileName, bwriter);
-		} catch(Exception e) {
+		} catch(final Exception e) {
 			// ignore because not critical
 			e.printStackTrace();
 		} finally {
