@@ -41,9 +41,9 @@ public class BufferedWriterFactory {
 	public static BufferedWriter create(String fileName) throws IOException {
 		lock.lock();
 		try {
-			if(cache.containsKey(fileName))
+			if(cache.containsKey(fileName)) 
 				return cache.get(fileName);
-		
+				
 			return new BufferedWriter(new FileWriter(fileName, true), 1024);
 		} finally {
 			lock.unlock();
@@ -61,8 +61,6 @@ public class BufferedWriterFactory {
 		try {
 			writer.flush();
 			cache.put(fileName, writer);
-		} catch(Exception e) {
-			e.printStackTrace();
 		} finally {
 			lock.unlock();
 		}
@@ -79,7 +77,6 @@ public class BufferedWriterFactory {
 			Iterator<BufferedWriter> iter = cache.values().iterator();
 		    while(iter.hasNext())
 		    	iter.next().close();
-		    
 		} finally {
 			lock.unlock();
 		}
@@ -95,7 +92,6 @@ public class BufferedWriterFactory {
 			Iterator<BufferedWriter> iter = cache.values().iterator();
 		    while(iter.hasNext())
 		    	iter.next().flush();
-		    
 		} finally {
 			lock.unlock();
 		}
