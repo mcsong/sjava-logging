@@ -59,7 +59,6 @@ public class BufferedWriterFactory {
 	public static void close(String fileName, BufferedWriter writer) throws Exception {
 		lock.lock();
 		try {
-			writer.flush();
 			cache.put(fileName, writer);
 		} finally {
 			lock.unlock();

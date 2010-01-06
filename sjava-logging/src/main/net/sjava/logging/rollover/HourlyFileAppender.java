@@ -3,8 +3,6 @@ package net.sjava.logging.rollover;
 
 import java.io.File;
 import java.io.BufferedWriter;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import net.sjava.logging.Level;
 import net.sjava.logging.util.ConfigUtility;
@@ -12,8 +10,6 @@ import net.sjava.logging.util.BufferedWriterFactory;
 import net.sjava.logging.util.SimpleDateFormatFactory;
 
 public class HourlyFileAppender extends AbstractFileAppender {
-    /** lock instance */
-	private final Lock lock = new ReentrantLock();
     
 	/**
 	 * 
@@ -63,23 +59,19 @@ public class HourlyFileAppender extends AbstractFileAppender {
 	
 	@Override
 	public void write(String serviceName, String fileName, Level level, String data) {
-		lock.lock();
 		try {
 			BufferedWriter bwriter = BufferedWriterFactory.create(super.logfileName);
-			
-			//BufferedWriter bwriter = BufferedWriterCacheUtility.createWriter(super.logfileName);
-			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
-			bwriter.write(" [" + level.getName().toLowerCase() +"] ");
-			bwriter.write(data);
-			bwriter.newLine();
-
+			synchronized(bwriter) {
+				bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
+				bwriter.write(" [" + level.getName().toLowerCase() +"] ");
+				bwriter.write(data);
+				bwriter.newLine();
+				bwriter.flush();
+			}
 			BufferedWriterFactory.close(super.logfileName, bwriter);
 		} catch(Exception e) {
 			// ignore because not critical
-			e.printStackTrace();
-			
-		} finally {
-			lock.unlock();
+			e.printStackTrace();	
 		}
 	}	
 }

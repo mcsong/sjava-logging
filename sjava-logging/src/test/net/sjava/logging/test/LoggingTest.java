@@ -42,8 +42,8 @@ public class LoggingTest {
 		
 		System.out.println("s - " + format.format(new Date()));
 		
-		testSingle();
-		//testMulti();
+		//testSingle();
+		testMulti();
 
 		
 		System.out.println("e - " + format.format(new Date()));
