@@ -72,21 +72,19 @@ public class MinutesFileAppender extends AbstractFileAppender {
 	
 	@Override
 	public void write(String serviceName, String fileName, Level level, String data) {
-		
-		BufferedWriter bwriter = null;
-		lock.lock();
+
 		try {			
-			bwriter = BufferedWriterFactory.create(super.logfileName);
-			bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
-			bwriter.write(" [" + level.getName().toLowerCase() +"] ");
-			bwriter.newLine();
-			
+			BufferedWriter bwriter = BufferedWriterFactory.create(super.logfileName);
+			synchronized(bwriter) {
+				bwriter.write(SimpleDateFormatFactory.createLogFormat().format(super.date));
+				bwriter.write(" [" + level.getName().toLowerCase() +"] ");
+				bwriter.newLine();
+				bwriter.flush();
+			}
 			BufferedWriterFactory.close(super.logfileName, bwriter);
-		} catch(final Exception e) {
+		} catch(Exception e) {
 			// ignore because not critical
 			e.printStackTrace();
-		} finally {
-			lock.unlock();
-		}
+		} 
 	}		
 }
