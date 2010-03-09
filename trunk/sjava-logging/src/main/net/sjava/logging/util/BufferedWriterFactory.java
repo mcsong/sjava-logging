@@ -1,3 +1,6 @@
+/**
+ * http://www.sjava.net/category/sjava%20project
+ */
 package net.sjava.logging.util;
 
 import java.io.IOException;
@@ -9,11 +12,15 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static net.sjava.logging.util.ConstantsFactory.createBufferSize;
+
+/**
+ * 
+ * @author mcsong@gmail.com
+ * @since 2010. 1. 5.
+ *
+ */
 public class BufferedWriterFactory {
-	/** 
-	 * max cache size 
-	 */
-	private static final int maxSize = ConfigUtility.createCacheCount();
 	
 	/** 
 	 * lock 
@@ -29,7 +36,7 @@ public class BufferedWriterFactory {
 	 * 
 	 */
 	static {
-		cache = new LRUCache<String, BufferedWriter>(maxSize);
+		cache = new LRUCache<String, BufferedWriter>(ConstantsFactory.createCacheSize());
 		cache = (Map<String, BufferedWriter>)Collections.synchronizedMap(cache);
 	}
 	
@@ -41,10 +48,10 @@ public class BufferedWriterFactory {
 	public static BufferedWriter create(String fileName) throws IOException {
 		lock.lock();
 		try {
-			if(cache.containsKey(fileName)) 
+			if(cache.containsKey(fileName))
 				return cache.get(fileName);
-				
-			return new BufferedWriter(new FileWriter(fileName, true), 1024);
+			
+			return new BufferedWriter(new FileWriter(fileName, true), createBufferSize());	 
 		} finally {
 			lock.unlock();
 		}
@@ -59,12 +66,14 @@ public class BufferedWriterFactory {
 	public static void close(String fileName, BufferedWriter writer) throws Exception {
 		lock.lock();
 		try {
+			if(cache.containsKey(fileName))
+				return;
+			
 			cache.put(fileName, writer);
 		} finally {
 			lock.unlock();
 		}
 	}
-	
 
 	/**
 	 * shutdown hooking thread call
@@ -73,9 +82,7 @@ public class BufferedWriterFactory {
 	public static void shutdown() throws Exception {
 		lock.lock();
 		try {
-			Iterator<BufferedWriter> iter = cache.values().iterator();
-		    while(iter.hasNext())
-		    	iter.next().close();
+			cache.clear();
 		} finally {
 			lock.unlock();
 		}
@@ -89,7 +96,7 @@ public class BufferedWriterFactory {
 		lock.lock();
 		try {
 			Iterator<BufferedWriter> iter = cache.values().iterator();
-		    while(iter.hasNext())
+			while(iter.hasNext())
 		    	iter.next().flush();
 		} finally {
 			lock.unlock();

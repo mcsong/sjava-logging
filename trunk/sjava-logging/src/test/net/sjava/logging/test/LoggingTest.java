@@ -1,3 +1,6 @@
+/**
+ * http://www.sjava.net/category/sjava%20project
+ */
 package net.sjava.logging.test;
 
 import net.sjava.logging.Logger;
@@ -27,10 +30,10 @@ public class LoggingTest {
 	
 	public static void testSingle() {
 		for(int i=0; i < 500; i++) {
-			Logger.create().log("aaaaaaaaaaaaaaa");
-			Logger.create().log("aaaaaaaaaaaaccccccccccccccccccaaa");
-			Logger.create().log("metoo", "ǪǪǪǪǪ��.. ");
-			Logger.create().log("abcded", "abcde" + i, "aaaa b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			Logger.open().fatal("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
+			//Logger.open().log("aaaaaaaaaaaaccccccccccccccccccaaa");
+			Logger.open().error("metoo", "ǪǪǪǪǪ��.. ", "adaas");
+			Logger.open().debug("abcded", "abcde" + i, "aaaa b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		}
 	}
 	

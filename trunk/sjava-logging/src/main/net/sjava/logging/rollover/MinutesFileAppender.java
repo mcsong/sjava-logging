@@ -1,3 +1,6 @@
+/**
+ * http://www.sjava.net/category/sjava%20project
+ */
 package net.sjava.logging.rollover;
 
 import java.io.File;
@@ -7,8 +10,12 @@ import java.io.BufferedWriter;
 
 import net.sjava.logging.Level;
 import net.sjava.logging.util.BufferedWriterFactory;
-import net.sjava.logging.util.ConfigUtility;
 import net.sjava.logging.util.SimpleDateFormatFactory;
+
+import static net.sjava.logging.util.ConstantsFactory.createBaseDirectory;
+import static net.sjava.logging.util.ConstantsFactory.createServiceDirectory;
+import static net.sjava.logging.util.ConstantsFactory.createFileName;
+import static net.sjava.logging.util.ConstantsFactory.createFileExtensionName;
 
 /**
  * 
@@ -33,9 +40,9 @@ public class MinutesFileAppender extends AbstractFileAppender {
 	void setDirectory(String directory, String serviceName) {
 		final StringBuilder builder = new StringBuilder(256);
 		
-		builder.append(ConfigUtility.createBaseDirectory(directory));
+		builder.append(createBaseDirectory(directory));
 		builder.append(System.getProperty("file.separator"));
-		builder.append(ConfigUtility.createServiceDir(serviceName));
+		builder.append(createServiceDirectory(serviceName));
 		builder.append(System.getProperty("file.separator") + super.year);
 		builder.append(System.getProperty("file.separator") + super.month);
 		builder.append(System.getProperty("file.separator") + super.day); 
@@ -62,9 +69,9 @@ public class MinutesFileAppender extends AbstractFileAppender {
 		builder.append(super.hour + ".");
 		builder.append(super.minute);
 		
-		builder.append("-" + ConfigUtility.createFileName(fileName));
+		builder.append("-" + createFileName(fileName));
 		builder.append( "-" + level.getName());
-		builder.append("." + ConfigUtility.createFileExtensionName());
+		builder.append("." + createFileExtensionName());
 		
 		super.logfileName = builder.toString();
 	}

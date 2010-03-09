@@ -1,3 +1,6 @@
+/**
+ * http://www.sjava.net/category/sjava%20project
+ */
 package net.sjava.logging.test;
 
 import net.sjava.logging.Logger;
@@ -5,10 +8,10 @@ import net.sjava.logging.Logger;
 public class LoggingThread extends Thread {
 
 	public void run() {
-		Logger.create().log("aaaaaaaaaaaaaaa");
-		Logger.create().log("°¡³ª´Ù¶ó¸¶¹Ù»ç¾Æ");
-		Logger.create().log("metoo", "ÇªÇªÇªÇªÇª¹Ú.. ");
-		Logger.create().log("service", "fileName", "³»¿ë");
+		Logger.open().fatal("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
+		//Logger.open().log("aaaaaaaaaaaaccccccccccccccccccaaa");
+		Logger.open().error("metoo", "ÇªÇªÇªÇªÇª¹Ú.. ", "adaas");
+		Logger.open().debug("abcded", "abcde" , "aaaa b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 	
 	}
 }

@@ -1,7 +1,10 @@
+/**
+ * http://www.sjava.net/category/sjava%20project
+ */
 package net.sjava.logging.rollover;
 
-
 /**
+ * 각종 Appender들을 리턴하는 Factory 클래스
  * 
  * @author mcsong@gmail.com
  * @since 2009. 7. 7.

@@ -1,5 +1,5 @@
 /**
- * http://www.sjava.net/category/Sjava%27s%20Library/sjava-logging
+ * http://www.sjava.net/category/sjava%20project
  */
 package net.sjava.logging;
 
@@ -13,10 +13,10 @@ package net.sjava.logging;
 public class Level {
 
 	/** level number */
-	private int level;
+	private int level = 0;
 	
 	/** level name */
-	private String name;
+	private String name = null;
 
 	/**
 	 * Constructor
