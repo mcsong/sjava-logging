@@ -3,6 +3,7 @@
  */
 package net.sjava.logging.test;
 
+import net.sjava.logging.Level;
 import net.sjava.logging.Logger;
 
 import java.util.Date;
@@ -30,10 +31,14 @@ public class LoggingTest {
 	
 	public static void testSingle() {
 		for(int i=0; i < 5000; i++) {
+					
 			Logger.open().fatal("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
-			//Logger.open().log("aaaaaaaaaaaaccccccccccccccccccaaa");
-			Logger.open().error("metoo", "ǪǪǪǪǪ��.. ", "adaas");
-			Logger.open().debug("abcded", "abcde" + i, "aaaa b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			Logger.open().error("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
+			Logger.open().warn("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
+			Logger.open().info("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
+			Logger.open().debug("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
+			Logger.open().trace("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
+			Logger.open().system("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
 		}
 	}
 	
