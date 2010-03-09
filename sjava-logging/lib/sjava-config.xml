@@ -26,6 +26,6 @@
 		<key name="flush-option" value="false" />
 		<!-- flush period, per second, deprecate -->
 		<key name="flush-period" value="10" />
-		
 	</sjava-service>
+	
 </sjava-config>
