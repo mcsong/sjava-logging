@@ -37,7 +37,7 @@ public class MinutesFileAppender extends AbstractFileAppender {
 	
 
 	@Override
-	void setDirectory(String directory, String serviceName) {
+	boolean setDirectory(String directory, String serviceName) {
 		final StringBuilder builder = new StringBuilder(256);
 		
 		builder.append(createBaseDirectory(directory));
@@ -51,9 +51,9 @@ public class MinutesFileAppender extends AbstractFileAppender {
 		super.logfileName = builder.toString();
 		final File file = new File(builder.toString());
 		if(file.exists())
-			return;
+			return true;
 		
-		file.mkdirs();
+		return file.mkdirs();
 	}
 
 	@Override

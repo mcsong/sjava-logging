@@ -27,7 +27,7 @@ public class HourlyFileAppender extends AbstractFileAppender {
 	}	
 	
 	@Override
-	void setDirectory(String directory, String serviceName) {
+	boolean setDirectory(String directory, String serviceName) {
 		StringBuilder builder = new StringBuilder(256);
 		
 		builder.append(createBaseDirectory(directory));		
@@ -40,9 +40,9 @@ public class HourlyFileAppender extends AbstractFileAppender {
 		super.logfileName = builder.toString();
 		File file = new File(builder.toString());
 		if(file.exists())
-			return;
+			return true;
 		
-		file.mkdirs();
+		return file.mkdirs();
 	}
 
 	@Override
