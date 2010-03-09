@@ -67,7 +67,7 @@ public abstract class AbstractFileAppender implements IAppender {
 	 * @param dir
 	 * @param serviceName
 	 */
-	abstract void setDirectory(String directory, String serviceName);
+	abstract boolean setDirectory(String directory, String serviceName);
 	
 	/**
 	 * 

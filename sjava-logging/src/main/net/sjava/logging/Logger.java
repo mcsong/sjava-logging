@@ -13,7 +13,7 @@ import net.sjava.logging.util.ConstantsFactory;
  * @author mcsong@gmail.com
  * @since 2010. 1. 5.
  */
-public class Logger implements Cloneable {
+public class Logger {
 	
 	/** Configuration level */
 	private static int configLevel = ConstantsFactory.createLevelStrategy();
