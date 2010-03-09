@@ -11,21 +11,15 @@
 	<!-- sjava-logging library setting -->
 	<sjava-service name="sjava-logging">
 		<key name="base-dir" value="d:\sjava-logging" />
-		<key name="service-dir" value="default" />
-		<key name="file-name" value="default" />
+		<key name="service-dir" value="default-service" />
+		<key name="file-name" value="default-filename" />
 		<key name="file-ext" value="log" />
 		<key name="buffer-size" value="1024" />
-		
 		<!-- day(1), hour(2), minute(3) -->
 		<key name="strategy" value="2" />
-		
 		<!-- lru cache map size -->
 		<key name="cache-size" value="200" />
-		
-		<!-- flush option, deprecated -->
-		<key name="flush-option" value="false" />
-		<!-- flush period, per second, deprecate -->
-		<key name="flush-period" value="10" />
+		<!-- level,  (0, "all"), (1, "fatal"), (2, "error"), (3, "warn"), (4, "info"), (5, "debug"), (6, "trace"), (7, "system") -->
+		<key name="level" value="0" />
 	</sjava-service>
-	
 </sjava-config>
