@@ -29,7 +29,7 @@ public class LoggingTest {
 	}
 	
 	public static void testSingle() {
-		for(int i=0; i < 500; i++) {
+		for(int i=0; i < 5000; i++) {
 			Logger.open().fatal("aaaaaaaaaaaaaaa", "asdsda", "dfjahshhjkshjkldfhjkldafdfadfadfhjkldfkj");
 			//Logger.open().log("aaaaaaaaaaaaccccccccccccccccccaaa");
 			Logger.open().error("metoo", "ǪǪǪǪǪ��.. ", "adaas");
@@ -45,8 +45,8 @@ public class LoggingTest {
 		
 		System.out.println("s - " + format.format(new Date()));
 		
-		//testSingle();
-		testMulti();
+		testSingle();
+		//testMulti();
 
 		
 		System.out.println("e - " + format.format(new Date()));
