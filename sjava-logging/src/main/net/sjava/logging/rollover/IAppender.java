@@ -1,3 +1,6 @@
+/**
+ * http://www.sjava.net/category/sjava%20project
+ */
 package net.sjava.logging.rollover;
 
 import net.sjava.logging.Level;

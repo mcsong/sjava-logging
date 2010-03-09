@@ -1,8 +1,11 @@
+/**
+ * http://www.sjava.net/category/sjava%20project
+ */
 package net.sjava.logging.rollover;
 
 import java.util.Date;
 import net.sjava.logging.Level;
-import net.sjava.logging.util.ConfigUtility;
+import net.sjava.logging.util.ConstantsFactory;
 import net.sjava.logging.util.SimpleDateFormatFactory;
 
 /**
@@ -46,7 +49,7 @@ public abstract class AbstractFileAppender implements IAppender {
 	
 	@Override
 	public void log(String serviceName, Level level, String data) {
-		this.log(serviceName, ConfigUtility.createFileName(null), level, data);
+		this.log(serviceName, ConstantsFactory.createFileName(null), level, data);
 	}
 	
 	@Override

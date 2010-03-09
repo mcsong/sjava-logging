@@ -1,71 +1,61 @@
 /**
- * http://www.sjava.net/category/Sjava%27s%20Library/sjava-logging
+ * http://www.sjava.net/category/sjava%20project
  */
 package net.sjava.logging;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
+ * 레벨을 유지하고 있는 Factory 클래스
  * 
  * @author mcsong@gmail.com
  * @since 2009. 7. 1.
  * @version 
  */
 public class LevelFactory {	
-	/** map of levels	 */
-	private Map<String, Level> levelMap;
 
-	/** singleton instance */
-	private static LevelFactory instance = new LevelFactory();
-	
-	/** constructor */
-	private LevelFactory() {
-		this.levelMap = new HashMap<String, Level>();
+	/** levels */
+	private static Map<String, Level> levels;
+
+	/** inialize */
+	static {
+		levels = new ConcurrentSkipListMap<String, Level>();
 		
-		this.levelMap.put("all", new Level(0, "all"));
-		this.levelMap.put("fatal", new Level(1, "fatal"));
-		this.levelMap.put("error", new Level(2, "error"));
-		this.levelMap.put("warn", new Level(3, "warn"));
-		this.levelMap.put("info", new Level(4, "info"));
-		this.levelMap.put("debug", new Level(5, "debug"));
-		this.levelMap.put("trace", new Level(6, "trace"));
-		this.levelMap.put("system", new Level(7, "system"));
+		levels.put("all", new Level(0, "all"));
+		levels.put("fatal", new Level(1, "fatal"));
+		levels.put("error", new Level(2, "error"));
+		levels.put("warn", new Level(3, "warn"));
+		levels.put("info", new Level(4, "info"));
+		levels.put("debug", new Level(5, "debug"));
+		levels.put("trace", new Level(6, "trace"));
+		levels.put("system", new Level(7, "system"));
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public static LevelFactory getInstance() {
-		return instance;
-	}
-	
 	
 	/**
 	 * 
 	 * @param level
 	 * @return
 	 */
-	public Level getLevel(int level) {
+	public static Level getLevel(int level) {
 		switch (level) {
 		case 1:
-			return this.getLevel("fatal");
+			return getLevel("fatal");
 		case 2:
-			return this.getLevel("error");
+			return getLevel("error");
 		case 3:
-			return this.getLevel("warn");
+			return getLevel("warn");
 		case 4:
-			return this.getLevel("info");
+			return getLevel("info");
 		case 5:
-			return this.getLevel("debug");
+			return getLevel("debug");
 		case 6:
-			return this.getLevel("trace");
+			return getLevel("trace");
 		case 7:
-			return this.getLevel("system");
+			return getLevel("system");
 			
 		default:
-			return this.getLevel("all");
+			return getLevel("all");
 		}
 	}
 	
@@ -74,13 +64,13 @@ public class LevelFactory {
 	 * @param name
 	 * @return
 	 */
-	public Level getLevel(String name) {
+	public static Level getLevel(String name) {
 		if (name == null)
 			return null;
 		
-		if(!this.levelMap.containsKey(name.toLowerCase()))
-			return (Level)this.levelMap.get("all");
+		if(!levels.containsKey(name.toLowerCase()))
+			return (Level)levels.get("all");
 		
-		return (Level)this.levelMap.get(name.toLowerCase());
+		return (Level)levels.get(name.toLowerCase());
 	}
 }
