@@ -2,8 +2,8 @@ package net.sjava.logging.rollover;
 
 import java.io.File;
 import java.io.BufferedWriter;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+//import java.util.concurrent.locks.Lock;
+//import java.util.concurrent.locks.ReentrantLock;
 
 import net.sjava.logging.Level;
 import net.sjava.logging.util.BufferedWriterFactory;
@@ -18,7 +18,7 @@ import net.sjava.logging.util.SimpleDateFormatFactory;
 public class MinutesFileAppender extends AbstractFileAppender {
 	
     /** lock instance */
-    private static final Lock lock = new ReentrantLock();
+    //private static final Lock lock = new ReentrantLock();
     
 	/**
 	 * 
